@@ -1,30 +1,31 @@
 <!DOCTYPE html>
+{% load static %}
+{% load crispy_forms_tags %}
 <html lang="en">
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <meta charset="UTF-8">
     <title>Home</title>
-    <style>
-        span{ color:red; }
-    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
 </head>
 <body>
     <h2>Registration Form</h2>
-    <form id="registration">
-        {% csrf_token %}
-        <h2>{{ form.name }}</h2>
-        <span id="name"></span>
-
-        <h2>{{ form.email }}</h2>
-        <span id="email"></span>
-
-        <h2>{{ form.number }}</h2>
-        <span id="number"></span>
-
-        <h2>{{ form.gender }}</h2>
-        <span id="gender"></span>
-    </form><br>
-    <button onclick="submit()">submit</button>
+    <div>
+        <form id="registration">
+            {% csrf_token %}
+            <h2>{{ form.name|as_crispy_field:"bootstrap5" }}</h2>
+            <span id="name"></span>
+            <h2>{{ form.email |as_crispy_field:"bootstrap5"}}</h2>
+            <span id="email"></span>
+            <h2>{{ form.number |as_crispy_field:"bootstrap5"}}</h2>
+            <span id="number"></span>
+            <h2>{{ form.gender |as_crispy_field:"bootstrap5"}}</h2>
+            <span id="gender"></span>
+        </form><br>
+        <button onclick="submit()">submit</button>
+    </div>
 </body>
 </html>
 
@@ -39,7 +40,7 @@
         data: frm.serialize(),
         success: function (result) {
             if (result.response == "success"){
-                document.location.href = {% url 'user_info' %}
+                document.location.href = {% url 'user' %}
             }
         },
         error:function(error){

@@ -1,0 +1,45 @@
+span{ color:red; }
+$primary = #0077FF
+
+html, body
+  height: 100%
+
+body
+  display: grid
+  font-family: Avenir
+  -webkit-text-size-adjust: 100%
+  -webkit-font-smoothing: antialiased
+  overflow: hidden
+
+*
+  box-sizing: border-box
+
+input{
+  position: relative
+  margin: auto
+  width: 100%
+  max-width: 280px
+  height: 53px
+  .border
+    position: absolute
+    left: 0
+    bottom: 0
+    height: 18px
+    fill: none
+    path
+      stroke: #C8CCD4
+      stroke-width: 2
+      d
+        transition: all .2s ease
+  .check
+    position: absolute
+    top: 20px
+    right: 20px
+    fill: none
+    transform: translate(0,9px) scale(0)
+    transition: all .3s cubic-bezier(.5, .9, .25, 1.3)
+    transition-delay: .15s
+    path
+      stroke: $primary
+      stroke-width: 2
+
