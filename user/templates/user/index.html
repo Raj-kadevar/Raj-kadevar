@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+        span{ color:red; }
+    </style>
+</head>
+<body>
+    <h2>Registration Form</h2>
+    <form id="registration">
+        {% csrf_token %}
+        <h2>{{ form.name }}</h2>
+        <span id="name"></span>
+
+        <h2>{{ form.email }}</h2>
+        <span id="email"></span>
+
+        <h2>{{ form.number }}</h2>
+        <span id="number"></span>
+
+        <h2>{{ form.gender }}</h2>
+        <span id="gender"></span>
+    </form><br>
+    <button onclick="submit()">submit</button>
+</body>
+</html>
+
+<script>
+    function submit(){
+      $('span').text(" ")
+      var frm = $('#registration')
+      $.ajax({
+        type:"POST",
+        headers: {'X-CSRFToken': '{{ csrf_token }}'},
+        url: "{% url 'index' %}",
+        data: frm.serialize(),
+        success: function (result) {
+            if (result.response == "success"){
+                document.location.href = {% url 'user_info' %}
+            }
+        },
+        error:function(error){
+            $('#name').text(JSON.parse(error.responseText)['name'])
+            $('#email').text(JSON.parse(error.responseText)['email'])
+            $('#number').text(JSON.parse(error.responseText)['number'])
+            $('#gender').text(JSON.parse(error.responseText)['gender'])
+        }
+      })
+    }
+</script>
