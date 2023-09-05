@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load static %}
+{% load crispy_forms_tags %}
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+</head>
+<body>
+<div class="form">
+    <h2>Registration Form</h2>
+    <form id="registration">
+        <div class="form-row">
+            {% csrf_token %}
+            <div class="form-group col-md-5 mb-0">
+                {{ form.name|as_crispy_field:"bootstrap5" }}
+                <span id="name"></span>
+                {{ form.number |as_crispy_field:"bootstrap5"}}
+                <span id="number"></span>
+                {{ form.email |as_crispy_field:"bootstrap5"}}
+                <span id="email"></span>
+                {{ form.gender |as_crispy_field:"bootstrap5"}}
+                <span id="gender"></span>
+            </div>
+        </div>
+    </form><br>
+        <button class="btn btn-primary" onclick="submit()">submit</button>
+</div>
+</body>
+</html>
+
+<script>
+    function submit(){
+      $('span').text(" ")
+      var frm = $('#registration')
+      $.ajax({
+        type:"POST",
+        headers: {'X-CSRFToken': '{{ csrf_token }}'},
+        url: "{% url 'index' %}",
+        data: frm.serialize(),
+        success: function (result) {
+            if (result.response == "success"){
+                document.location.href = {% url 'user' %}
+            }
+        },
+        error:function(error){
+            $('#name').text(JSON.parse(error.responseText)['name'])
+            $('#email').text(JSON.parse(error.responseText)['email'])
+            $('#number').text(JSON.parse(error.responseText)['number'])
+            $('#gender').text(JSON.parse(error.responseText)['gender'])
+        }
+      })
+    }
+</script>
