@@ -11,21 +11,25 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
 </head>
 <body>
+<div class="form">
     <h2>Registration Form</h2>
-    <div>
-        <form id="registration">
+    <form id="registration">
+        <div class="form-row">
             {% csrf_token %}
-            <h2>{{ form.name|as_crispy_field:"bootstrap5" }}</h2>
-            <span id="name"></span>
-            <h2>{{ form.email |as_crispy_field:"bootstrap5"}}</h2>
-            <span id="email"></span>
-            <h2>{{ form.number |as_crispy_field:"bootstrap5"}}</h2>
-            <span id="number"></span>
-            <h2>{{ form.gender |as_crispy_field:"bootstrap5"}}</h2>
-            <span id="gender"></span>
-        </form><br>
-        <button onclick="submit()">submit</button>
-    </div>
+            <div class="form-group col-md-5 mb-0">
+                {{ form.name|as_crispy_field:"bootstrap5" }}
+                <span id="name"></span>
+                {{ form.number |as_crispy_field:"bootstrap5"}}
+                <span id="number"></span>
+                {{ form.email |as_crispy_field:"bootstrap5"}}
+                <span id="email"></span>
+                {{ form.gender |as_crispy_field:"bootstrap5"}}
+                <span id="gender"></span>
+            </div>
+        </div>
+    </form><br>
+        <button class="btn btn-primary" onclick="submit()">submit</button>
+</div>
 </body>
 </html>
 

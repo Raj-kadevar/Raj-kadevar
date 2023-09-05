@@ -15,4 +15,4 @@ class UserView(CreateView):
         return JsonResponse(user.errors, status=400)
 
 class UserDetail(TemplateView):
-    template_name = "user/user.html"
+    template_name = "user/user_info.html"
